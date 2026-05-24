@@ -13,7 +13,7 @@ public class main {
 
             System.out.print("Quantos alunos deseja cadastrar? ");
             int qtd = sc.nextInt();
-            sc.nextLine(); // consumir quebra de linha
+            sc.nextLine();
 
             for (int i = 0; i < qtd; i++) {
                 System.out.println("\n--- Cadastro do aluno " + (i+1) + " ---");
@@ -25,7 +25,7 @@ public class main {
 
                 System.out.print("Idade: ");
                 int idade = sc.nextInt();
-                sc.nextLine(); // consumir quebra de linha
+                sc.nextLine();
 
                 // Inserir no banco
                 String sql = "INSERT INTO Aluno(nome_aluno, email, idade) VALUES (?, ?, ?)";
@@ -36,6 +36,26 @@ public class main {
                 ps.executeUpdate();
 
                 System.out.println("Aluno cadastrado com sucesso!");
+            }
+            // Cadastro professor
+            System.out.println("Informe a quantidade de professores: ");
+            int QtdProf = sc.nextInt();
+            sc.nextLine();
+
+            for(int i = 0; i < QtdProf ; i++){
+                System.out.println("Informe o nome do professor "+ (i+1)+": ");
+                String NomeProf = sc.nextLine();
+
+                System.out.println("Informe a titulação do "+ NomeProf +": ");
+                String titulacao = sc.nextLine();
+
+                String sqlP = "INSERT INTO Professor(nome_professor , titulacao) values (? , ?)";
+                PreparedStatement ps = conn.prepareStatement(sqlP);
+                ps.setString(1 , NomeProf);
+                ps.setString(2 , titulacao);
+                ps.executeUpdate();
+
+                System.out.println("Professor cadastrado com sucesso !");
             }
 
             conexao.fechar();
