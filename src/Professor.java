@@ -36,9 +36,9 @@ public class Professor {
     @Override
     public String toString(){ // mando um objeto em formato string para o user
         return "Professor: {" +
-                "id: "+ id_professor +
-                "nome: "+ nome_professor +
-                "titulacao: "+ titulacao +
+                "id: " + id_professor +
+                " nome: "+ nome_professor +
+                " titulacao: "+ titulacao +
                 '}';
     }
 }

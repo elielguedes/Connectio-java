@@ -9,6 +9,16 @@
             this.c = c;
         }
 
+        public void InserirAluno(Aluno a) throws SQLException {
+            String sql = "INSERT INTO Aluno(nome_aluno , email , idade) VALUES (? , ? , ?)";
+            try(PreparedStatement ps = c.prepareStatement(sql)){
+                ps.setString(1 , a.getNomeAluno());
+                ps.setString(2 , a.getEmail());
+                ps.setInt(3 , a.getIdade());
+                ps.executeUpdate();
+            }
+        }
+
         public List<Aluno> ListarAlunos() throws SQLException{
             List<Aluno> Alunos = new ArrayList<>();
             String sql = "SELECT id_aluno, nome_aluno , email , idade FROM Aluno";

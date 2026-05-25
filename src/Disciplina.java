@@ -52,4 +52,15 @@ public class Disciplina {
     public void setCurso_id(int curso_id){
         this.curso_id = curso_id;
     }
+
+    @Override
+    public String toString(){
+        return "Disciplina{" +
+                "id: " + id_disciplina +
+                "nome: "+ Nome +
+                "Carga-Horaria: " + CargaHoraria +
+                "professor_id: " + prof_id +
+                "Curso_id: " + curso_id +
+                '}';
+    }
 }

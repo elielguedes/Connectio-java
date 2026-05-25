@@ -8,6 +8,15 @@ public class CursoDao {
         this.c = c;
     }
 
+    public void InserirCurso(Curso cc) throws SQLException {
+        String sql = "INSERT INTO curso(nome_curso , duracao) VALUES(? , ?)";
+        try(PreparedStatement ps = c.prepareStatement(sql)){
+            ps.setString(1 , cc.getNome());
+            ps.setInt(2 , cc.getDuracao());
+            ps.executeUpdate();
+        }
+    }
+
     public List<Curso> ListarCurso() throws SQLException {
         List<Curso> curso = new ArrayList<>();
         String sql = "SELECT id_curso , nome_curso , duracao FROM curso";
@@ -23,5 +32,14 @@ public class CursoDao {
             curso.add(c);
         }
         return curso;
+    }
+
+    public void UpdateCurso(Curso curso) throws SQLException {
+        String sqlUp = "UPDATE Curso SET nome_curso = ? , duracao = ? WHERE id_curso = ?";
+        try(PreparedStatement stmt = c.prepareStatement(sqlUp)){
+            stmt.setString(1 , curso.getNome());
+            stmt.setInt(2 , curso.getDuracao());
+            stmt.executeUpdate();
+        }
     }
 }

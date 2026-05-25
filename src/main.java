@@ -1,6 +1,6 @@
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.util.Scanner;
+import java.util.*;
 
 public class main {
     public static void main(String[] args) {
@@ -8,6 +8,9 @@ public class main {
             Conneccao conexao = new Conneccao();
             conexao.conectar();
             Connection conn = conexao.getConnection();
+            AlunoDao d = new AlunoDao(conn);
+            ProfessorDao Pd = new ProfessorDao(conn);
+            CursoDao cd = new CursoDao(conn);
 
             Scanner sc = new Scanner(System.in);
 
@@ -28,12 +31,8 @@ public class main {
                 sc.nextLine();
 
                 // Inserir no banco
-                String sql = "INSERT INTO Aluno(nome_aluno, email, idade) VALUES (?, ?, ?)";
-                PreparedStatement ps = conn.prepareStatement(sql);
-                ps.setString(1, nome);
-                ps.setString(2, email);
-                ps.setInt(3, idade);
-                ps.executeUpdate();
+                Aluno a = new Aluno(0 , nome , email , idade);
+                d.InserirAluno(a);
 
                 System.out.println("Alunos cadastrado com sucesso " + nome +" !");
             }
@@ -49,11 +48,8 @@ public class main {
                 System.out.println("Informe a titulação do "+ NomeProf +": ");
                 String titulacao = sc.nextLine();
 
-                String sqlP = "INSERT INTO Professor(nome_professor , titulacao) values (? , ?)";
-                PreparedStatement ps = conn.prepareStatement(sqlP);
-                ps.setString(1 , NomeProf);
-                ps.setString(2 , titulacao);
-                ps.executeUpdate();
+                Professor p = new Professor(0 , NomeProf , titulacao);
+                Pd.InserirProf(p);
 
                 System.out.println("Professores cadastrado com sucesso "+ NomeProf + " !");
             }
@@ -66,11 +62,32 @@ public class main {
             int Duracao = sc.nextInt();
             sc.nextLine();
 
-            String sqlc = "INSERT INTO curso(nome_curso , duracao) values (? , ?)";
-            PreparedStatement ps = conn.prepareStatement(sqlc);
-            ps.setString(1 , NomeCurso);
-            ps.setInt(2 , Duracao);
-            ps.executeUpdate();
+            Curso c = new Curso(0 , NomeCurso , Duracao);
+            cd.InserirCurso(c);
+
+            System.out.println("Digite a quantidade de disciplina: ");
+            int qtdD = sc.nextInt();
+            sc.nextLine();
+            for(int y = 0; y < qtdD ;y++){
+                System.out.println("Informe o nome da disciplina " + (y + 1) + ": ");
+                String NomeDisciplina = sc.nextLine();
+                System.out.println("Informe a carga horaria da Disciplina "+ NomeDisciplina + ": ");
+                int Carga = sc.nextInt();
+                sc.nextLine();
+
+                List<Professor> ListaProf = Pd.ListarProfessor();
+                System.out.println("\n ------ Professores Disponiveis -------- \n");
+                for(Professor prof : ListaProf){
+                    System.out.println(prof);
+                }
+
+                System.out.println("Informe Id do professor responsável pela "+ NomeDisciplina +": ");
+                int IdP = sc.nextInt();
+                sc.nextLine();
+
+
+            }
+
             System.out.println("Curso Cadastrado com sucesso "+ NomeCurso +" !");
             conexao.fechar();
             sc.close();

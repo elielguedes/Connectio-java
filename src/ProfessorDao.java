@@ -8,6 +8,15 @@ public class ProfessorDao {
         this.c = c;
     }
 
+    public void InserirProf(Professor p) throws SQLException{
+        String sql = "INSERT INTO professor(nome_professor , titulacao) VALUES (? , ?)";
+        try(PreparedStatement ps = c.prepareStatement(sql)){
+            ps.setString(1 , p.getNome_professor());
+            ps.setString(2, p.getTitulacao());
+            ps.executeUpdate();
+        }
+    }
+
     public List<Professor> ListarProfessor() throws SQLException{ // throws se der erro volta um sql error
         List<Professor> professor = new ArrayList<>();
         String sql = "SELECT id_professor , nome_professor , titulacao FROM Professor";
@@ -24,5 +33,22 @@ public class ProfessorDao {
             professor.add(p); // Objeto criado e colocando na lista
         }
         return professor; // retorna o objeto
+    }
+
+    public void UpdateProf(Professor p) throws SQLException {
+        String sqlUp = "UPDATE Professor SET nome_professor = ? , titulacao = ? WHERE id_professor = ?";
+        try(PreparedStatement stmt = c.prepareStatement(sqlUp)){
+            stmt.setString(1 , p.getNome_professor());
+            stmt.setString(2 , p.getTitulacao());
+            stmt.executeUpdate();
+        }
+    }
+
+    public void DelProf(int id) throws SQLException {
+        String sqlDl = "DELETE FROM Professor WHERE id_professor = ?";
+        try(PreparedStatement stmt = c.prepareStatement(sqlDl)){
+            stmt.setInt(1 , id);
+            stmt.executeUpdate();
+        }
     }
 }
