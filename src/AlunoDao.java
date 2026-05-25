@@ -26,4 +26,23 @@
             }
             return Alunos;
         }
+
+        public void AtualizarAluno(Aluno a) throws SQLException {
+            String sqlUp = "UPDATE Aluno set nome_aluno = ? , email = ? , idade = ? where id_aluno = ?";
+            try(PreparedStatement stmt = c.prepareStatement(sqlUp)){
+                stmt.setString(1 , a.getNomeAluno());
+                stmt.setString(2 , a.getEmail());
+                stmt.setInt(3 , a.getIdade());
+                stmt.setInt(4 , a.getIdAluno());
+                stmt.executeUpdate();
+            }
+        }
+
+        public void DeletarAluno(int id) throws SQLException{
+            String sqlD = "DELETE FROM Aluno WHERE id_aluno = ?";
+            try(PreparedStatement stmt = c.prepareStatement(sqlD)){
+                stmt.setInt(1 , id);
+                stmt.executeUpdate();
+            }
+        }
     }

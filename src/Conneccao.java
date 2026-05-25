@@ -1,50 +1,48 @@
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.DriverManager; // cria a conecção
+import java.sql.SQLException; //erro relacional do sql
+import java.sql.Statement; // execulta o sql
 
 public class Conneccao {
 
-    private Connection c;
+    private Connection c; // a variavel c guarda a conecxão aberta
 
-    public void conectar() throws ClassNotFoundException, SQLException {
-        // Carregar driver do MySQL
-        Class.forName("com.mysql.cj.jdbc.Driver");
+    public void conectar() throws ClassNotFoundException, SQLException {  // pode gerar erros drive nao encontrado e erro no banco
+         Class.forName("com.mysql.cj.jdbc.Driver");// carrega o drive
 
-        // Conectar ao banco sistemaoff
+        // drivemanager recebe a url || getConne -> pega a conecção
         c = DriverManager.getConnection(
                 "jdbc:mysql://localhost:3306/sistemaoff?useSSL=false&serverTimezone=UTC",
                 "root",
-                "" // coloque sua senha aqui se tiver
+                ""
         );
         System.out.println("Conectado com sucesso!");
     }
 
-    public void executar() {
-        try {
+    public void executar() { // metodo tenta executar e trata dos erros
+        try {  // tenta exxultar algo que pode dar erro
             conectar();
-            // aqui você pode chamar métodos como criar(), inserir(), mostrar()
-        } catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException e) { // se der erro no drive cai aqui
             System.out.println("Erro: " + e.getMessage());
-        } catch (SQLException e) {
-            System.out.println("Erro: " + e.getMessage());
-        } finally {
+        } catch (SQLException e) { // aqui erro em sql ex: senha errada
+            System.out.println("Erro sql: " + e.getMessage());
+        } finally { // executa sempre
             try {
-                if (c != null) {
+                if (c != null) { // se c tiver null fecha o banco
                     c.close();
                     System.out.println("Conexão fechada");
                 }
-            } catch (SQLException e) {
+            } catch (SQLException e) { // tentou fachar o banco e deu erro
                 System.out.println("Erro ao fechar: " + e.getMessage());
             }
         }
     }
 
-    public Connection getConnection() {
+    public Connection getConnection() { // devolve connecção a outra classe
         return c;
     }
 
-    public void fechar() throws SQLException {
+    public void fechar() throws SQLException { // fecha manualmente o banco
         if (c != null) {
             c.close();
             System.out.println("Conexão fechada");

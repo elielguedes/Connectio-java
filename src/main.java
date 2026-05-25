@@ -35,7 +35,7 @@ public class main {
                 ps.setInt(3, idade);
                 ps.executeUpdate();
 
-                System.out.println("Aluno cadastrado com sucesso!");
+                System.out.println("Alunos cadastrado com sucesso " + nome +" !");
             }
             // Cadastro professor
             System.out.println("Informe a quantidade de professores: ");
@@ -55,9 +55,23 @@ public class main {
                 ps.setString(2 , titulacao);
                 ps.executeUpdate();
 
-                System.out.println("Professor cadastrado com sucesso !");
+                System.out.println("Professores cadastrado com sucesso "+ NomeProf + " !");
             }
 
+            //Cadastrar curso
+            System.out.println("\n == Cadastrar curso ==");
+            System.out.println("Digite o nome do curso: ");
+            String NomeCurso = sc.nextLine();
+            System.out.println("Informe a duração de "+ NomeCurso +": ");
+            int Duracao = sc.nextInt();
+            sc.nextLine();
+
+            String sqlc = "INSERT INTO curso(nome_curso , duracao) values (? , ?)";
+            PreparedStatement ps = conn.prepareStatement(sqlc);
+            ps.setString(1 , NomeCurso);
+            ps.setInt(2 , Duracao);
+            ps.executeUpdate();
+            System.out.println("Curso Cadastrado com sucesso "+ NomeCurso +" !");
             conexao.fechar();
             sc.close();
         } catch (Exception e) {
