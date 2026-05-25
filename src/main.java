@@ -34,6 +34,53 @@ public class main {
                 Aluno a = new Aluno(0 , nome , email , idade);
                 d.InserirAluno(a);
 
+                System.out.println("Deseja atualizar o cadastro " + nome + " (Sim/Não): ");
+                String resposta = sc.nextLine();
+                if(resposta.equalsIgnoreCase("sim")){
+                    System.out.println("Digite novo nome: ");
+                    String NovoNome = sc.nextLine();
+
+                    System.out.println("Digite o novo email: ");
+                    String NovoEmail = sc.nextLine();
+
+                    System.out.println("Digite a nova idade: ");
+                    int NovaIdade = sc.nextInt();
+                    sc.nextLine();
+
+                    List<Aluno> alunos = d.ListarAlunos();
+                    System.out.println("\n --- Alunos disponiveis --- \n ");
+                    for(Aluno al : alunos){
+                        System.out.println(al);
+                    }
+
+                    System.out.println("Digite o id do aluno que deseja alterar: ");
+                    int id_aluno = sc.nextInt();
+                    sc.nextLine();
+
+                    Aluno AlunoUpdate = new Aluno(id_aluno , NovoNome , NovoEmail , NovaIdade);
+                    d.AtualizarAluno(AlunoUpdate);
+
+                    System.out.println("cadastro "+ NovoNome +" atualizado com sucesso !");
+                }
+
+                System.out.println("Deseja deletar o cadastro (Sim/Não): ");
+                String Res = sc.nextLine();
+
+                if(Res.equalsIgnoreCase("sim")){
+                    System.out.println("\n ---- Alunos cadastrados ---- \n");
+                    List<Aluno> as = d.ListarAlunos();
+                    for(Aluno al : as){
+                        System.out.println(al);
+                    }
+
+                    System.out.println("Informe o id para deletar o cadastro: ");
+                    int id_aluno_d = sc.nextInt();
+                    sc.nextLine();
+
+                    d.DeletarAluno(id_aluno_d);
+                    System.out.println("cadastro de aluno deletado com sucesso !");
+                }
+
                 System.out.println("Alunos cadastrado com sucesso " + nome +" !");
             }
             // Cadastro professor
@@ -50,6 +97,9 @@ public class main {
 
                 Professor p = new Professor(0 , NomeProf , titulacao);
                 Pd.InserirProf(p);
+
+                System.out.println("Deseja alterar o cadastro "+ NomeProf + " (Sim/Não): ");
+                String ResProf = sc.nextLine();
 
                 System.out.println("Professores cadastrado com sucesso "+ NomeProf + " !");
             }
