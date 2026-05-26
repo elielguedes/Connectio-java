@@ -98,9 +98,44 @@ public class main {
                 Professor p = new Professor(0 , NomeProf , titulacao);
                 Pd.InserirProf(p);
 
+                // Update professor
                 System.out.println("Deseja alterar o cadastro "+ NomeProf + " (Sim/Não): ");
                 String ResProf = sc.nextLine();
+                if(ResProf.equalsIgnoreCase("sim")){
+                    System.out.println("Informe o novo nome do "+ NomeProf + ": ");
+                    String NovoNomeP = sc.nextLine();
 
+                    System.out.println("Digite a nova titulação "+ titulacao + ": ");
+                    String NovaTitulacao = sc.nextLine();
+
+                    List<Professor> ListaProf = Pd.ListarProfessor();
+                    System.out.println("\n ------ Professores Disponiveis -------- \n");
+                    for(Professor prof : ListaProf){
+                        System.out.println(prof);
+                    }
+                    System.out.println("Informe o id que deseja alterar: ");
+                    int id_prof = sc.nextInt();
+                    sc.nextLine();
+
+                    Professor profup = new Professor(id_prof, NovoNomeP , NovaTitulacao);
+                    Pd.UpdateProf(profup);
+                }
+
+                // Del professor
+                System.out.println("Deseja apaguar cadastro do professor? ");
+                String Res = sc.nextLine();
+                if(Res.equalsIgnoreCase("sim")){
+                    List<Professor> pr = Pd.ListarProfessor();
+                    for(Professor profs : pr){
+                        System.out.println(profs);
+                    }
+                    System.out.println("Infome o id do cadastro que deseja deletar: ");
+                    int Del = sc.nextInt();
+                    sc.nextLine();
+
+                    Pd.DelProf(Del);
+                    System.out.println("O cadastro "+ NomeProf + " de id "+ Del +" foi deletado com sucesso !");
+                }
                 System.out.println("Professores cadastrado com sucesso "+ NomeProf + " !");
             }
 
@@ -124,18 +159,6 @@ public class main {
                 System.out.println("Informe a carga horaria da Disciplina "+ NomeDisciplina + ": ");
                 int Carga = sc.nextInt();
                 sc.nextLine();
-
-                List<Professor> ListaProf = Pd.ListarProfessor();
-                System.out.println("\n ------ Professores Disponiveis -------- \n");
-                for(Professor prof : ListaProf){
-                    System.out.println(prof);
-                }
-
-                System.out.println("Informe Id do professor responsável pela "+ NomeDisciplina +": ");
-                int IdP = sc.nextInt();
-                sc.nextLine();
-
-
             }
 
             System.out.println("Curso Cadastrado com sucesso "+ NomeCurso +" !");
