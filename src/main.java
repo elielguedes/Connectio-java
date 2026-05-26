@@ -150,6 +150,33 @@ public class main {
             Curso c = new Curso(0 , NomeCurso , Duracao);
             cd.InserirCurso(c);
 
+            System.out.println("Deseja alterar o cadastro do curso(Sim/Não)? ");
+            String Qtd = sc.nextLine();
+
+            if(Qtd.equalsIgnoreCase("sim")){
+                System.out.println("Digite o novo nome do "+ NomeCurso +": ");
+                String NewCurso = sc.nextLine();
+
+                System.out.println("Digite a nova duração do curso: ");
+                int NovaDuracao = sc.nextInt();
+                sc.nextLine();
+
+                List<Curso> cursos = cd.ListarCurso();
+                for(Curso cur : cursos){
+                    System.out.println(cur);
+                }
+
+                System.out.println("Digite o id do cadastro que deseja alterar: ");
+                int idCurso = sc.nextInt();
+                sc.nextLine();
+
+                Curso curso = new Curso(idCurso , NewCurso , NovaDuracao);
+                cd.UpdateCurso(curso);
+
+                System.out.println("Cadastro alterado com sucesso !");
+
+            }
+
             System.out.println("Digite a quantidade de disciplina: ");
             int qtdD = sc.nextInt();
             sc.nextLine();

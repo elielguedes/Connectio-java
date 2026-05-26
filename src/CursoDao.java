@@ -39,6 +39,7 @@ public class CursoDao {
         try(PreparedStatement stmt = c.prepareStatement(sqlUp)){
             stmt.setString(1 , curso.getNome());
             stmt.setInt(2 , curso.getDuracao());
+            stmt.setInt(3 , curso.getId_curso());
             stmt.executeUpdate();
         }
     }
