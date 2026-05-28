@@ -43,4 +43,12 @@ public class CursoDao {
             stmt.executeUpdate();
         }
     }
+
+    public void DeleteCurso(int id) throws SQLException {
+        String sqlDel = "DELETE FROM Curso WHERE id_curso = ?";
+        try(PreparedStatement ps = c.prepareStatement(sqlDel)){
+            ps.setInt(1 , id);
+            ps.executeUpdate();
+        }
+    }
 }

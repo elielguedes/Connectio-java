@@ -1,5 +1,4 @@
-import java.sql.Connection;
-import java.sql.PreparedStatement;
+import java.sql.*;
 import java.util.*;
 
 public class main {
@@ -172,12 +171,31 @@ public class main {
 
                 Curso curso = new Curso(idCurso , NewCurso , NovaDuracao);
                 cd.UpdateCurso(curso);
+                System.out.println("Cadastro" + NewCurso + " alterado com sucesso ! com nova duracao "+ NovaDuracao);
+                }
 
-                System.out.println("Cadastro alterado com sucesso !");
+            System.out.println("Deseja excluir algum cadastro(sim/não)? ");
+            String res = sc.nextLine();
 
+            if(res.equalsIgnoreCase("sim")){
+                System.out.println("\n ---- Cursos Disponveis ---- \n");
+
+                List<Curso> cpp = cd.ListarCurso();
+                for(Curso cur : cpp){
+                    System.out.println(cur);
+                }
+
+                System.out.println("Informe o id do curso que deseja excluir: ");
+                int id_curso = sc.nextInt();
+                sc.nextLine();
+
+                cd.DeleteCurso(id_curso);
+
+                System.out.println("Cadastro de id: "+ id_curso + "Deletado com sucesso !");
             }
+            System.out.println("Curso Cadastrado com sucesso "+ NomeCurso +" !");
 
-            System.out.println("Digite a quantidade de disciplina: ");
+            System.out.println("\nDigite a quantidade de disciplina: \n");
             int qtdD = sc.nextInt();
             sc.nextLine();
             for(int y = 0; y < qtdD ;y++){
@@ -186,9 +204,45 @@ public class main {
                 System.out.println("Informe a carga horaria da Disciplina "+ NomeDisciplina + ": ");
                 int Carga = sc.nextInt();
                 sc.nextLine();
+
+                System.out.println("\n ---- Professores disponiveis ---- \n");
+                List<Professor> pr = Pd.ListarProfessor();
+                for(Professor prof : pr){
+                    System.out.println(prof);
+                }
+
+                System.out.println("Informe o id do professor que deseja inserir a "+ NomeDisciplina + " : ");
+                int id_pr = sc.nextInt();
+                sc.nextLine();
+
+                System.out.println(" \n ---- Cursos Disponíveis --- \n ");
+                List<Curso> cursos = cd.ListarCurso();
+                for(Curso cs : cursos){
+                    System.out.println(cs);
+                }
+
+                System.out.println("Informe o id do curso atrelado a "+ NomeDisciplina + " : ");
+                int id_cur = sc.nextInt();
+                sc.nextLine();
+
+                Disciplina dis = new Disciplina( 0, NomeDisciplina , Carga , id_pr , id_cur);
+
+                System.out.println("Deseja alterar o cadastro da "+ NomeDisciplina + " (sim/não):");
+                String Resd = sc.nextLine();
+
+                if(Resd.equalsIgnoreCase("sim")){
+                    System.out.println("Informe uma novo nome da "+ NomeDisciplina + " : ");
+                    String newname = sc.nextLine();
+
+                    System.out.println("Informe nova carga horaria da " + newname + " : ");
+                    int NewCarga = sc.nextInt();
+                    sc.nextLine();
+
+                    System.out.println("\n ---- Professores disponiveis ---- \n ");
+
+                }
             }
 
-            System.out.println("Curso Cadastrado com sucesso "+ NomeCurso +" !");
             conexao.fechar();
             sc.close();
         } catch (Exception e) {
