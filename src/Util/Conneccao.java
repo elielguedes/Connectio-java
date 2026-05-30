@@ -1,3 +1,5 @@
+package Util;
+
 import java.sql.Connection;
 import java.sql.DriverManager; // cria a conecção
 import java.sql.SQLException; //erro relacional do sql
@@ -8,7 +10,7 @@ public class Conneccao {
     private Connection c; // a variavel c guarda a conecxão aberta
 
     public void conectar() throws ClassNotFoundException, SQLException {  // pode gerar erros drive nao encontrado e erro no banco
-         Class.forName("com.mysql.cj.jdbc.Driver");// carrega o drive
+        Class.forName("com.mysql.cj.jdbc.Driver");// carrega o drive
 
         // drivemanager recebe a url || getConne -> pega a conecção
         c = DriverManager.getConnection(

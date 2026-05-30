@@ -1,3 +1,10 @@
+package Dao;
+
+import Dao.CursoDao;
+import Dao.ProfessorDao;
+import Model.Disciplina;
+import Model.Professor;
+import Util.Conneccao;
 import java.sql.*;
 import java.util.*;
 
@@ -33,18 +40,19 @@ public class DisciplinaDao {
                     rs.getInt("professor_id"),
                     rs.getInt("curso_id")
             );
-                    d.add(dis);
+            d.add(dis);
         }
         return d;
     }
 
     public void UpdateDisciplina(Disciplina disciplina) throws SQLException {
-        String sqlUp = "UPDATE disciplina SET nome_disciplina = ? , CargaHoraria = ? , professor_id = ? , curso_id WHERE id_disciplina";
+        String sqlUp = "UPDATE disciplina SET nome_disciplina = ? , CargaHoraria = ? , professor_id = ? , curso_id = ? WHERE id_disciplina = ?";
         try(PreparedStatement stmt = c.prepareStatement(sqlUp)){
             stmt.setString(1 , disciplina.getNome());
             stmt.setInt(2 , disciplina.getCargaHoraria());
             stmt.setInt(3 , disciplina.getProf());
             stmt.setInt(4 , disciplina.getCurso_id());
+            stmt.setInt(5 , disciplina.getId_disciplina());
             stmt.executeUpdate();
         }
     }
@@ -56,5 +64,6 @@ public class DisciplinaDao {
             stmt.executeUpdate();
         }
     }
+
 
 }

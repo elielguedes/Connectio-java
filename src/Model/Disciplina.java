@@ -1,3 +1,5 @@
+package Model;
+
 public class Disciplina {
     private int id_disciplina;
     private String Nome;

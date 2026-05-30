@@ -1,3 +1,7 @@
+package Dao;
+
+import Model.Curso;
+import Util.Conneccao;
 import java.util.*;
 import java.sql.*;
 
