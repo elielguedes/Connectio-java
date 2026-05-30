@@ -1,3 +1,5 @@
+package Model;
+
 public class Professor {
     private int id_professor;
     private String nome_professor;
@@ -34,11 +36,11 @@ public class Professor {
     }
 
     @Override
-    public String toString(){
+    public String toString(){ // mando um objeto em formato string para o user
         return "Professor: {" +
-                "id: "+ id_professor +
-                "nome: "+ nome_professor +
-                "titulacao: "+ titulacao +
+                "id: " + id_professor +
+                " nome: "+ nome_professor +
+                " titulacao: "+ titulacao +
                 '}';
     }
 }

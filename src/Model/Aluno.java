@@ -1,3 +1,5 @@
+package Model;
+
 public class Aluno {
     private int IdAluno;
     private String NomeAluno;

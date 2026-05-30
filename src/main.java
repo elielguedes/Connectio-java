@@ -1,6 +1,15 @@
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.util.Scanner;
+import java.sql.*;
+import java.util.*;
+import Util.Conneccao;
+import Service.AlunoService;
+import Service.CursoService;
+import Service.DisciplinaService;
+import Service.ProfessorService;
+import Dao.AlunoDao;
+import Dao.ProfessorDao;
+import Dao.CursoDao;
+import Dao.DisciplinaDao;
+
 
 public class main {
     public static void main(String[] args) {
@@ -10,56 +19,31 @@ public class main {
             Connection conn = conexao.getConnection();
 
             Scanner sc = new Scanner(System.in);
+            AlunoService as = new AlunoService(new AlunoDao(conn), sc);
+            ProfessorService pf = new ProfessorService(new ProfessorDao(conn), sc);
+            CursoService cr = new CursoService(new CursoDao(conn), sc);
+            DisciplinaService ds = new DisciplinaService(new DisciplinaDao(conn), sc);
 
-            System.out.print("Quantos alunos deseja cadastrar? ");
-            int qtd = sc.nextInt();
-            sc.nextLine();
-
-            for (int i = 0; i < qtd; i++) {
-                System.out.println("\n--- Cadastro do aluno " + (i+1) + " ---");
-                System.out.print("Nome: ");
-                String nome = sc.nextLine();
-
-                System.out.print("Email: ");
-                String email = sc.nextLine();
-
-                System.out.print("Idade: ");
-                int idade = sc.nextInt();
+            while(true){
+                System.out.println("\n=== Menu Principal ===");
+                System.out.println("\n1 -> Gerenciar Aluno");
+                System.out.println("\n2 -> Gerenciar Professor");
+                System.out.println("\n3 -> Gerenciar Curso");
+                System.out.println("\n4 -> Gerenciar Disciplina");
+                System.out.println("\n5 -> Sair");
+                System.out.println("\nDigite opção desejada acima: ");
+                int opcao = sc.nextInt();
                 sc.nextLine();
-
-                // Inserir no banco
-                String sql = "INSERT INTO Aluno(nome_aluno, email, idade) VALUES (?, ?, ?)";
-                PreparedStatement ps = conn.prepareStatement(sql);
-                ps.setString(1, nome);
-                ps.setString(2, email);
-                ps.setInt(3, idade);
-                ps.executeUpdate();
-
-                System.out.println("Aluno cadastrado com sucesso!");
-            }
-            // Cadastro professor
-            System.out.println("Informe a quantidade de professores: ");
-            int QtdProf = sc.nextInt();
-            sc.nextLine();
-
-            for(int i = 0; i < QtdProf ; i++){
-                System.out.println("Informe o nome do professor "+ (i+1)+": ");
-                String NomeProf = sc.nextLine();
-
-                System.out.println("Informe a titulação do "+ NomeProf +": ");
-                String titulacao = sc.nextLine();
-
-                String sqlP = "INSERT INTO Professor(nome_professor , titulacao) values (? , ?)";
-                PreparedStatement ps = conn.prepareStatement(sqlP);
-                ps.setString(1 , NomeProf);
-                ps.setString(2 , titulacao);
-                ps.executeUpdate();
-
-                System.out.println("Professor cadastrado com sucesso !");
+                switch(opcao){
+                    case 1 -> as.MenuAluno();
+                    case 2 -> pf.MenuProf();
+                    case 3 -> cr.MenuCurso();
+                    case 4 -> ds.MenuDisciplina();
+                    case 5 -> { return; }
+                    default -> System.out.println("Opção incorreta ! ");
+                }
             }
 
-            conexao.fechar();
-            sc.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
