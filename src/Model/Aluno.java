@@ -33,7 +33,7 @@ public class Aluno {
         return Email;
     }
 
-    public void setEmail(){
+    public void setEmail(String Email){
         this.Email = Email;
     }
 

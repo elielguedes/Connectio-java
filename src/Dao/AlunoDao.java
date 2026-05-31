@@ -58,4 +58,19 @@ public class AlunoDao {
         }
     }
 
+    public Aluno BuscarId(int id) throws SQLException{
+        String sql = "SELECT id_aluno, nome_aluno , email , idade FROM Aluno WHERE id_aluno = ?";
+        try(PreparedStatement ps = c.prepareStatement(sql)){
+            ps.setInt(1 , id);
+            try(ResultSet rs = ps.executeQuery()){
+                return new Aluno(
+                        rs.getInt("id_aluno"),
+                        rs.getString("nome_aluno"),
+                        rs.getString("email"),
+                        rs.getInt("idade")
+                );
+            }
+        }
+    }
+
 }

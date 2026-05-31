@@ -2,6 +2,7 @@ package Dao;
 
 import Dao.CursoDao;
 import Dao.ProfessorDao;
+import Model.Curso;
 import Model.Disciplina;
 import Model.Professor;
 import Util.Conneccao;
@@ -65,5 +66,19 @@ public class DisciplinaDao {
         }
     }
 
-
+    public Disciplina BuscaId(int id) throws SQLException{
+        String sql = "SELECT id_disciplina , nome_disciplina , CargaHoraria , professor_id , curso_id FROM disciplina WHERE id_disciplina = ?";
+        try(PreparedStatement ps = c.prepareStatement(sql)){
+            ps.setInt(1 , id);
+            try(ResultSet rs = ps.executeQuery()){
+                return new Disciplina(
+                        rs.getInt("id_disciplina"),
+                        rs.getString("nome_disciplina"),
+                        rs.getInt("CargaHoraria"),
+                        rs.getInt("professor_id"),
+                        rs.getInt("curso_id")
+                );
+            }
+        }
+    }
 }
