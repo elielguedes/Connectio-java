@@ -52,9 +52,9 @@ public class main {
                         default -> System.out.println("Opção incorreta!");
                     }
                 }
-            } catch (Exception e) {
+            } catch (Exception e) { // qualquer erro
                 System.out.println("Erro: " + e.getMessage());
-            } finally {
+            } finally { // sempre cai aqui
                 conexao.fechar();
                 sc.close();
             }
