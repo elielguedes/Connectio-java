@@ -45,4 +45,14 @@ public class Matricula {
         this.disciplinafk = disciplinafk;
     }
 
+    @Override
+    public String toString(){
+        return "Matricula {" +
+                "id: "+ getIdMatricula() +
+                " status: "+ getStatus() +
+                " Aluno_id"+ getAlunofk() +
+                " Disciplina_id"+ getDisciplinafk() +
+                " }";
+    }
+
 }
