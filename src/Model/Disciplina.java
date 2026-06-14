@@ -59,10 +59,10 @@ public class Disciplina {
     public String toString(){
         return "Disciplina{" +
                 "id: " + id_disciplina +
-                "nome: "+ Nome +
-                "Carga-Horaria: " + CargaHoraria +
-                "professor_id: " + prof_id +
-                "Curso_id: " + curso_id +
+                " nome: "+ Nome +
+                " Carga-Horaria: " + CargaHoraria +
+                " professor_id: " + prof_id +
+                " Curso_id: " + curso_id +
                 '}';
     }
 }

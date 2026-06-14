@@ -1,6 +1,7 @@
 package Dao;
 
 import Model.Curso;
+import Model.Professor;
 import Util.Conneccao;
 import java.util.*;
 import java.sql.*;
@@ -53,6 +54,20 @@ public class CursoDao {
         try(PreparedStatement ps = c.prepareStatement(sqlDel)){
             ps.setInt(1 , id);
             ps.executeUpdate();
+        }
+    }
+
+    public Curso BuscaId(int id) throws SQLException{
+        String sql = "SELECT id_curso , nome_curso , duracao FROM curso WHERE id_curso = ?";
+        try(PreparedStatement ps = c.prepareStatement(sql)){
+            ps.setInt(1 , id);
+            try(ResultSet rs = ps.executeQuery()){
+                return new Curso(
+                        rs.getInt("id_curso"),
+                        rs.getString("nome_curso"),
+                        rs.getInt("duracao")
+                );
+            }
         }
     }
 }

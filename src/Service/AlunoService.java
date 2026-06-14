@@ -25,13 +25,18 @@ public class AlunoService {
 
             int opcao = sc.nextInt();
             sc.nextLine();
-            switch(opcao){
-                case 1 -> CadastrarAluno();
-                case 2 -> ListarAlunos();
-                case 3 -> AlterAluno();
-                case 4 -> DeleteAluno();
-                case 5 -> { return; }
-                default -> System.out.println("Opção invalida, Tente novamente! ");
+
+            try{
+                switch(opcao){
+                    case 1 -> CadastrarAluno();
+                    case 2 -> ListarAlunos();
+                    case 3 -> AlterAluno();
+                    case 4 -> DeleteAluno();
+                    case 5 -> { return; }
+                    default -> System.out.println("Opção invalida, Tente novamente! ");
+                }
+            }catch(Exception e){
+                System.out.println("Error: "+ e.getMessage());
             }
         }
     }
@@ -55,6 +60,7 @@ public class AlunoService {
     }
 
     public void ListarAlunos() throws SQLException{
+        System.out.println(" ----- Alunos Disponíveis ----- ");
         List<Aluno> a = dao.listarAlunos();
         for(Aluno al : a){
             System.out.println(al);
@@ -69,16 +75,25 @@ public class AlunoService {
             int id = sc.nextInt();
             sc.nextLine();
 
+            Aluno a = dao.BuscarId(id);
+            if(a != null){
+                System.out.println("Aluno não encontrado!");
+                return;
+            }
             System.out.println("Infome o nome atualizado: ");
-            String Name = sc.nextLine();
+            a.setNomeAluno(sc.nextLine());
+
             System.out.println("Infome email: ");
-            String Email = sc.nextLine();
+            a.setEmail(sc.nextLine());
+
             System.out.println("Informe a idade: ");
-            int Idade = sc.nextInt();
+            a.setIdade(sc.nextInt());
             sc.nextLine();
-            Aluno al = new Aluno(id , Name , Email , Idade);
-            dao.UpdateAlunos(al);
-            System.out.println("Aluno, "+ Name + " email, "+ Email + " Idade, "+ Idade + ", Alterado com sucesso!");
+
+            dao.UpdateAlunos(a);
+            // uso get aqui e porquê foram enviados primeiro os set get pegou e agr get retorna os que pegaram do set que recebe
+            System.out.println("Aluno atualizado com sucesso! " + "Nome: " + a.getNomeAluno() + ", Email: " + a.getEmail() + ", Idade: " + a.getIdade());
+
 
             System.out.println("Deseja Alterar proximo aluno(Sim/Não? ");
             Opcao = sc.nextLine();
@@ -90,9 +105,15 @@ public class AlunoService {
         String opcao;
         do{
             ListarAlunos();
-           System.out.println("Informe o id do aluno que deseja deletar: ");
-           int id = sc.nextInt();
-           sc.nextLine();
+
+            System.out.println("Informe o id do aluno que deseja deletar: ");
+            int id = sc.nextInt();
+            sc.nextLine();
+            Aluno a = dao.BuscarId(id);
+            if(a != null){
+                System.out.println("Aluno não encontrado!");
+                return;
+            }
 
            System.out.println("Deseja deletar proximo aluno(Sim/Não)? ");
            opcao = sc.nextLine();
@@ -100,6 +121,8 @@ public class AlunoService {
            System.out.println("Cadastro "+ id + ", Deletado com sucesso!");
 
            dao.DeletarAluno(id);
+
+           System.out.println("o id "+ id +" do aluno "+ a.getNomeAluno() +" removido com sucesso!");
 
         }while(opcao.equalsIgnoreCase("sim"));
     }

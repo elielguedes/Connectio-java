@@ -44,6 +44,7 @@ public class ProfessorDao{
         try(PreparedStatement stmt = c.prepareStatement(sqlUp)){
             stmt.setString(1 , p.getNome_professor());
             stmt.setString(2 , p.getTitulacao());
+            stmt.setInt(3 , p.getIdProfessor());
             stmt.executeUpdate();
         }
     }
@@ -53,6 +54,20 @@ public class ProfessorDao{
         try(PreparedStatement stmt = c.prepareStatement(sqlDl)){
             stmt.setInt(1 , id);
             stmt.executeUpdate();
+        }
+    }
+
+    public Professor BuscaId(int id) throws SQLException{
+        String sql = "SELECT id_professor , nome_professor , titulacao FROM Professor WHERE id_professor = ?";
+        try(PreparedStatement ps = c.prepareStatement(sql)){
+            ps.setInt(1 , id);
+            try(ResultSet rs = ps.executeQuery()){
+                return new Professor(
+                        rs.getInt("id_aluno"),
+                        rs.getString("nome_professor"),
+                        rs.getString("titulacao")
+                );
+            }
         }
     }
 }

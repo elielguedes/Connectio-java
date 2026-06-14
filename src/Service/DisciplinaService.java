@@ -15,32 +15,36 @@ public class DisciplinaService {
     private ProfessorDao p;
     private CursoDao c;
 
-    public DisciplinaService(DisciplinaDao dao , Scanner sc){
-        this.sc = sc;
+    public DisciplinaService(DisciplinaDao dao , ProfessorDao p , CursoDao c, Scanner sc){
         this.dao = dao;
         this.p = p;
         this.c = c;
+        this.sc = sc;
     }
 
     public void MenuDisciplina() throws SQLException{
         while(true){
             System.out.println("\n === Menu Disciplina == \n ");
-            System.out.println("\n1 -> Cadastrar");
-            System.out.println("\n2 -> Listar ");
-            System.out.println("\n3 -> Atualizar ");
-            System.out.println("\n4 -> Deletar ");
-            System.out.println("\n5 ->  Sair");
-            System.out.println("\nDigite opção desejada acima: ");
+            System.out.println("1 -> Cadastrar");
+            System.out.println("2 -> Listar ");
+            System.out.println("3 -> Atualizar ");
+            System.out.println("4 -> Deletar ");
+            System.out.println("5 ->  Sair");
+            System.out.println("Digite opção desejada acima: ");
             int opcao = sc.nextInt();
             sc.nextLine();
 
-            switch(opcao){
-                case 1 -> CadastrarDisciplina();
-                case 2 -> ListarDisciplinas();
-                case 3 -> UpdateDisciplina();
-                case 4 -> DeletarDisciplina();
-                case 5 -> { return; }
-                default -> System.out.println("Opção Invalida ou incorreta tente novamente ");
+            try{
+                switch(opcao){
+                    case 1 -> CadastrarDisciplina();
+                    case 2 -> ListarDisciplinas();
+                    case 3 -> UpdateDisciplina();
+                    case 4 -> DeletarDisciplina();
+                    case 5 -> { return; }
+                    default -> System.out.println("Opção Invalida ou incorreta tente novamente ");
+                }
+            }catch(Exception e){
+                System.out.println("Error: "+ e.getMessage());
             }
         }
     }
@@ -66,10 +70,12 @@ public class DisciplinaService {
         for(int i = 0; i < qtd;i++){
             System.out.println("Digite o nome da disciplina: ");
             String Name = sc.nextLine();
+
             System.out.println("Digite a Carga horaria da disciplina "+ Name + " : ");
             int carga = sc.nextInt();
             sc.nextLine();
             Lista();
+
             System.out.println("Escolha o id do professor que ministrara a disciplina: ");
             int Prof_id = sc.nextInt();
             sc.nextLine();
@@ -98,23 +104,28 @@ public class DisciplinaService {
             System.out.println("digite o id da disciplina que deseja alterar: ");
             int id = sc.nextInt();
             sc.nextLine();
+
+            Disciplina d = dao.BuscaId(id);
+            if(d != null){
+                System.out.println("Disciplina não encontrada!");
+            }
             System.out.println("Digite o nome da nova disciplina: ");
-            String NewName = sc.nextLine();
-            System.out.println("Digite a Carga horaria da disciplina "+ NewName + " : ");
-            int carga = sc.nextInt();
+            d.setNome(sc.nextLine());
+
+            System.out.println("Digite a Carga horaria da disciplina "+ d.getNome() + " : ");
+            d.setCargaHoraria(sc.nextInt());
             sc.nextLine();
             Lista();
             System.out.println("Escolha o id do professor que ministrara a disciplina: ");
-            int Prof_id = sc.nextInt();
+            d.setProf(sc.nextInt());
             sc.nextLine();
 
             ListaCurso();
-            System.out.println("Digite o id do curso que a disciplina "+ NewName + " está atrelada: ");
-            int curso_id = sc.nextInt();
+            System.out.println("Digite o id do curso que a disciplina "+ d.getNome() + " está atrelada: ");
+            d.setCurso_id(sc.nextInt());
             sc.nextLine();
 
-            Disciplina dis = new Disciplina(id , NewName , carga , Prof_id , curso_id);
-            dao.UpdateDisciplina(dis);
+            dao.UpdateDisciplina(d);
 
             System.out.println("Deseja Alterar mais um cadatro(Sim/não)? ");
             op = sc.nextLine();
@@ -128,6 +139,10 @@ public class DisciplinaService {
             System.out.println("Digite o id do cadastro que desja deletar: ");
             int id = sc.nextInt();
             sc.nextLine();
+            Disciplina d = dao.BuscaId(id);
+            if(d != null){
+                System.out.println("Cadastro não encontrado!");
+            }
             dao.DelDisciplina(id);
 
             System.out.println("Digite se deseja deletar mais um cadatro: ");
