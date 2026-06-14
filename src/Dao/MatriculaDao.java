@@ -11,7 +11,7 @@ public class MatriculaDao {
     }
 
     public void InsertMatricula(Matricula m) throws SQLException {
-        String sql = "INSERT INTO matricula(status , aluno_id , disciplina_id) values(? , ? , ?)";
+        String sql = "INSERT INTO matricula(id_matricula , status , aluno_id , disciplina_id) values(? , ? , ? , ?)";
         try(PreparedStatement ps = c.prepareStatement(sql)){
             ps.setInt(1 , m.getIdMatricula());
             ps.setString(2 , m.getStatus());
@@ -50,7 +50,7 @@ public class MatriculaDao {
         }
     }
 
-    public void DeleteMatricula(Matricula id) throws SQLException {
+    public void DeleteMatricula(int id) throws SQLException {
         String sql = "DELETE FROM matricula WHERE id_matricula = ?";
         try(PreparedStatement ps = c.prepareStatement(sql)){
             ps.setInt(1 , id);
@@ -59,16 +59,19 @@ public class MatriculaDao {
     }
 
     public Matricula Busca(int id) throws SQLException {
-        String sql = "SELECT id_matricula , status , aluno_id , disciplina_id WHERE id_matricula = ?";
+        String sql = "SELECT id_matricula , status , aluno_id , disciplina_id FROM matricula WHERE id_matricula = ?";
         try(PreparedStatement ps = c.prepareStatement(sql)){
             ps.setInt(1 , id);
             try(ResultSet rs = ps.executeQuery()){
-                return new Matricula(
-                        rs.getInt("id_matricula"),
-                        rs.getString("status"),
-                        rs.getInt("aluno_id"),
-                        rs.getInt("disciplina_id")
-                );
+                if(rs.next()){
+                    return new Matricula(
+                            rs.getInt("id_matricula"),
+                            rs.getString("status"),
+                            rs.getInt("aluno_id"),
+                            rs.getInt("disciplina_id")
+                    );
+                }
+                return null;
             }
         }
     }

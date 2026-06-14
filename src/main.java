@@ -9,6 +9,10 @@ import Dao.AlunoDao;
 import Dao.ProfessorDao;
 import Dao.CursoDao;
 import Dao.DisciplinaDao;
+import Service.HistoricoService;
+import Service.MatriculaService;
+import Dao.MatriculaDao;
+import Dao.HistoricoDao;
 
 public class main {
     public static void main(String[] args) {
@@ -27,6 +31,8 @@ public class main {
                     new CursoDao(conn),
                     sc
             );
+            MatriculaService m = new MatriculaService(conn , sc ,new AlunoDao(conn) , new DisciplinaDao(conn), new MatriculaDao(conn));
+            HistoricoService h = new HistoricoService(sc, conn, new MatriculaService(conn , sc ,new AlunoDao(conn) , new DisciplinaDao(conn), new MatriculaDao(conn)), new HistoricoDao(conn));
 
             try {
                 while (true) {
@@ -35,7 +41,9 @@ public class main {
                     System.out.println("2 -> Gerenciar Professor");
                     System.out.println("3 -> Gerenciar Curso");
                     System.out.println("4 -> Gerenciar Disciplina");
-                    System.out.println("5 -> Sair");
+                    System.out.println("5 -> Gerenciar Matricula");
+                    System.out.println("6 -> Gerenciar Historico");
+                    System.out.println("7 -> Sair");
                     System.out.print("Digite opção desejada: ");
                     int opcao = sc.nextInt();
                     sc.nextLine();
@@ -45,7 +53,9 @@ public class main {
                         case 2 -> pf.MenuProf();
                         case 3 -> cr.MenuCurso();
                         case 4 -> ds.MenuDisciplina();
-                        case 5 -> {
+                        case 5 -> m.Menu();
+                        case 6 -> h.MenuHistorico();
+                        case 7 -> {
                             System.out.println("Encerrando programa...");
                             return;
                         }

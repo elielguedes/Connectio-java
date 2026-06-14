@@ -11,7 +11,7 @@ public class HistoricoDao {
     }
 
     public void InsertHistorico(Historico h) throws SQLException{
-        String sql = "INSERT INTO historico(nota , frequencia , matricula_id) VALUES(? , ? , ?)";
+        String sql = "INSERT INTO historico(id_historico ,nota , frequencia , matricula_id) VALUES(? , ? , ? , ?)";
         try(PreparedStatement ps = c.prepareStatement(sql)){
            ps.setInt(1 , h.getId());
            ps.setFloat(2 , h.getNota());
@@ -30,7 +30,7 @@ public class HistoricoDao {
             Historico hs = new Historico(
                     rs.getInt("id_historico"),
                     rs.getFloat("nota"),
-                    rs.getInt("frequancia"),
+                    rs.getInt("frequencia"),
                     rs.getInt("matricula_id")
             );
             h.add(hs);
